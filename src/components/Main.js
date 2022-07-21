@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 
 import { default as Header } from './Header';
+import { default as Posts } from './Posts';
 
 const Main = ({authenticated, setAuthenticated, currentUser }) => {
 
@@ -15,7 +16,7 @@ const Main = ({authenticated, setAuthenticated, currentUser }) => {
                             <input type="search" placeholder="Search for posts..."/>
                             <button className="material-symbols-outlined">search</button>
                         </form>
-                        <div>
+                        <div id='postgreeting'>
                             {authenticated?
                                 <Fragment>
                                     <span>Welcome, {currentUser.username}!</span>
@@ -26,7 +27,11 @@ const Main = ({authenticated, setAuthenticated, currentUser }) => {
                                 </Fragment>
                             }
                         </div>
-                        <iframe title='view' src='/posts' id='postview'></iframe>
+                        {/* <iframe title='view' src='/posts' id='postview'></iframe> */}
+                        <div id='postview'>
+                            <Posts
+                                authenticated={authenticated}/>
+                        </div>
                     </section>
                     <section id="view">
                         {authenticated?
