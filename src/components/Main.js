@@ -4,7 +4,6 @@ import { default as Header } from './Header';
 import { default as Posts } from './Posts';
 
 const Main = ({authenticated, setAuthenticated, currentUser }) => {
-
     return (
         <Fragment>
                 <Header
@@ -14,7 +13,7 @@ const Main = ({authenticated, setAuthenticated, currentUser }) => {
                     <section id="posts">
                         <form>
                             <input type="search" placeholder="Search for posts..."/>
-                            <button className="material-symbols-outlined">search</button>
+                            <button className="material-symbols-outlined" id='search-button'>search</button>
                         </form>
                         <div id='postgreeting'>
                             {authenticated?

@@ -27,9 +27,9 @@ export async function signUp(newProfile) {
             })
         })
         const result = await response.json();
-        console.log(result)
         return result;
     } catch (error) {
+        console.error(error)
         throw error;
     }
 }

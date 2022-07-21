@@ -1,38 +1,66 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {default as Header} from './Header';
 import { signUp, logIn } from "../api";
 
 const Login = ({authenticated, setAuthenticated, currentUser, setCurrentUser}) => {
     const [signingUp, setSigningUp] = useState(false);
+    const [gotError, setGotError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setAuthenticated(false);
     }, [setAuthenticated])
 
-    const handleSignUp = (event) => {
+    const handleSignUp = async (event) => {
         const newUser = {
             username: document.getElementById('login-form').username.value,
             password: document.getElementById('login-form').password.value
         }
+        setGotError(false);
         event.preventDefault();
-        signUp(newUser);
-        setSigningUp(false);
+        try {
+            if (newUser.password !== document.getElementById('confirm-password').value){
+                throw new Error("Password and confirm password must match");
+            };
+            await signUp(newUser)
+            .then((result) => {
+                console.log(result)
+                if (result.success === false){
+                    throw new Error(result.error.message);
+                }
+                const displayName = newUser.username;
+                setCurrentUser({username: displayName, token: result});
+            });
+            setAuthenticated(true);
+            navigate('/', {state: authenticated, currentUser});
+        } catch (error) {
+            console.error(error)
+            setGotError(error);
+        }
     }
 
-    const handleLogIn = (event) => {
+    const handleLogIn = async (event) => {
         const user = {
             username: document.getElementById('login-form').username.value,
             password: document.getElementById('login-form').password.value
         }
+        setGotError(false);
         event.preventDefault();
-        logIn(user)
-        .then((result) => {
-            let displayName = user.username;
-            setCurrentUser({username: displayName, token: result})
-        });
-        setAuthenticated(true);
+        try {
+            await logIn(user)
+            .then((result) => {
+                const displayName = user.username;
+                setCurrentUser({username: displayName, token: result});
+            });
+            setAuthenticated(true);
+            navigate('/', {state: authenticated, currentUser});
+        } catch (error) {
+            const invalidCredentials = new Error("Invalid credentials, please try again");
+            console.error(invalidCredentials)
+            setGotError(invalidCredentials);
+        }
     }
 
     return(
@@ -49,7 +77,7 @@ const Login = ({authenticated, setAuthenticated, currentUser, setCurrentUser}) =
                             <input type='text' placeholder='Enter new password...' id="password"></input>
                             <input type='text' placeholder='Confirm password...' id="confirm-password"></input>
                             <button id="signup-submit" onClick={ handleSignUp }>Sign Up</button>
-                            <span id="registration-type" onClick={(event) => {setSigningUp(false)}}>Already have an account? Sign in</span>
+                            <span id="registration-type" onClick={(event) => {setSigningUp(false); setGotError(false)}}>Already have an account? Sign in</span>
                         </Fragment>:
                             <Fragment>
                                 <span id="login-header">Log In</span>
@@ -57,13 +85,18 @@ const Login = ({authenticated, setAuthenticated, currentUser, setCurrentUser}) =
                                 <input type='text' placeholder='Enter username...' id="username"></input>
                                 <label htmlFor="password">Password</label>
                                 <input type='text' placeholder='Enter password...' id="password"></input>
-                                <button id="login-submit" onClick={ handleLogIn }>
-                                    <Link to='/'>Log In</Link>
-                                </button>
-                                <span id="registration-type" onClick={(event) => {setSigningUp(true)}}>Create an account</span>
+                                <button id="login-submit" onClick={ handleLogIn }>Log In</button>
+                                <span id="registration-type" onClick={(event) => {setSigningUp(true); setGotError(false)}}>Create an account</span>
                             </Fragment>
                         }
                     </form>
+                    {gotError?
+                        <div id="login-error">
+                            <span className="material-symbols-outlined" id="error-icon">error</span>
+                            <span>{gotError.message}</span>
+                        </div>:
+                        null
+                    }
                 </section>
         </Fragment>
     )
