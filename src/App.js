@@ -3,14 +3,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { 
     Main,
-    Posts,
     Login,
-    Signup
+    Profile,
  } from './components';
-
+ 
 const App = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const [currentUser, setCurrentUser] = useState({username: null, token: null});
+    const [postList, setPostList] = useState([]);
+
     return (
         <BrowserRouter>
             <Routes>
@@ -19,17 +20,20 @@ const App = () => {
                         authenticated={authenticated}
                         setAuthenticated={setAuthenticated}
                         currentUser={currentUser}
-                        setCurrentUser={setCurrentUser}/>}></Route>
-                <Route path='/posts' element={
-                    <Posts 
-                        authenticated={authenticated}/>}></Route>
+                        setCurrentUser={setCurrentUser}
+                        postList={postList}
+                        setPostList={setPostList}/>}></Route>
                 <Route path='/login' element={
                     <Login 
                         authenticated={authenticated}
                         setAuthenticated={setAuthenticated}
                         currentUser={currentUser}
                         setCurrentUser={setCurrentUser}/>}></Route>
-                <Route path='/signup' element={<Signup/>}></Route>
+                <Route path='/profile' element={
+                    <Profile
+                        authenticated={authenticated}
+                        currentUser={currentUser}
+                        postList={postList}/>}></Route>
             </Routes>
         </BrowserRouter>
     );

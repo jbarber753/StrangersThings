@@ -1,9 +1,14 @@
 export const BASE_URL = 'https://strangers-things.herokuapp.com/api/2206-ftb-et-web-ft-b';
 
-export async function getPosts() {
+export async function getPosts(user) {
     const url = `${BASE_URL}/posts`;
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
         const result= await response.json();
         return result.data.posts;
     } catch (error) {
@@ -56,18 +61,80 @@ export async function logIn(profile) {
     }
 }
 
-
-export async function testSignIn(userTest) {
-    const url = `${BASE_URL}/users/me`;
-    try { fetch(url, {
+export async function createPost(form) {
+    const url = `${BASE_URL}/posts`;
+    try {
+        const response = await fetch(url, {
+            method: "POST",
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer`
+                'Authorization': `Bearer ${form.token}`
             },
-            }).then(response => response.json())
-            .then(result => {
-                console.log(result);
+            body: JSON.stringify({
+                post: {
+                title: form.title,
+                description: form.description,
+                price: form.price,
+                location: form.location,
+                willDeliver: form.willDeliver
+                }
             })
+        })
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function deletePost(post, user) {
+    const url = `${BASE_URL}/posts/${post}`;
+    try {
+        await fetch(url, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        }) 
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function getMyInfo(user) {
+    const url = `${BASE_URL}/users/me`;
+    try {
+        const response = await fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            },
+        })
+        const result = await response.json();
+        return result.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function createMessage(message) {
+    const url = `${BASE_URL}/posts/${message.post}/messages`;
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${message.author}`
+            },
+            body: JSON.stringify({
+                message: {
+                    content: message.content
+                }
+            })
+        })
+        const result = await response.json();
+        return result;
     } catch (error) {
         throw error;
     }

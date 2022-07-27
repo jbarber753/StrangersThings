@@ -64,7 +64,7 @@ main {
     margin: 20px 0 0 20px;
 }
 
-form {
+#search {
     height: 10%;
     width: 100%;
     display: flex;
@@ -154,7 +154,7 @@ form {
     background-color: lightgray;
 }
 
-#view {
+#empty-view {
     flex: auto;
     height: 95%;
     margin: 20px 20px 0 20px;
@@ -203,10 +203,116 @@ form {
     background-color: lightgray;
 }
 
-#view > span {
+#empty-view > span {
     font-size: 32px;
     font-style: italic;
     color: gray;
+}
+
+#new-post-view, #new-message-view {
+    flex: auto;
+    height: 95%;
+    margin: 20px 20px 0 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-block-end-color: rgb(238, 238, 238);
+    border-block-end-style: inset;
+    border-block-end-width: 2px;
+    border-block-start-color: rgb(238, 238, 238);
+    border-block-start-style: inset;
+    border-block-start-width: 2px;
+    border-bottom-color: rgb(238, 238, 238);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-style: inset;
+    border-bottom-width: 2px;
+    border-collapse: separate;
+    border-end-end-radius: 5px;
+    border-end-start-radius: 5px;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-inline-end-color: rgb(238, 238, 238);
+    border-inline-end-style: inset;
+    border-inline-end-width: 2px;
+    border-inline-start-color: rgb(238, 238, 238);
+    border-inline-start-style: inset;
+    border-inline-start-width: 2px;
+    border-left-color: rgb(238, 238, 238);
+    border-left-style: inset;
+    border-left-width: 2px;
+    border-right-color: rgb(238, 238, 238);
+    border-right-style: inset;
+    border-right-width: 2px;
+    border-start-end-radius: 5px;
+    border-start-start-radius: 5px;
+    border-top-color: rgb(238, 238, 238);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-style: inset;
+    border-top-width: 2px;
+}
+
+#new-post-close {
+    margin-left: 100%;
+    margin-right: 24px;
+}
+
+#new-post-view > span, #new-message-view > span {
+    width: 100%;
+    font-size: 32px;
+    margin: 24px auto;
+    background-color: firebrick;
+    color: white;
+    text-shadow: 0 0 3px black;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+#new-post-form {
+    width: 100%;
+}
+
+#new-post-form > div {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    margin: 24px 0;
+}
+
+#new-post-form input {
+    margin-left: 50px;
+    width: 100%;
+    font-size: 24px;
+}
+
+#new-message-view input {
+    width: 100%;
+    font-size: 24px;
+    margin-bottom: 24px;
+}
+
+#new-post-form label {
+    font-weight: bold;
+    min-width: 200px;
+}
+
+#new-post-form #new-will-deliver {
+    width: 24px;
+    margin: 0 auto 0 50px;
+    height: 34px;
+}
+
+#new-post-submit, #new-message-submit {
+    display: block;
+    font-size: 32px;
+    margin: 0 auto;
 }
 
 .post {
@@ -220,6 +326,7 @@ form {
     text-shadow: 0 0 2px black;
     border: 2px solid black;
     border-bottom: none;
+    border-radius: 5px 5px 0 0;
 }
 
 .title {
@@ -239,6 +346,7 @@ form {
     border: 2px solid black;
     background-color: white;
     font-size: 24px;
+    border-radius: 0 0 5px 5px;
 }
 
 .details {
@@ -253,7 +361,15 @@ form {
     margin-bottom: 24px;
 }
 
-.message {
+.message-button {
+    align-self: flex-end;
+    margin-bottom: 24px;
+    margin-right: 40px;
+    width: fit-content;
+    font-size: 24px;
+}
+
+.delete {
     align-self: flex-end;
     margin-bottom: 24px;
     margin-right: 40px;
@@ -306,8 +422,35 @@ form {
     border-radius: 5px;
     height: 48px;
     font-size: 32px;
-    width: 60%;
+}
+
+#username {
     margin: 0 auto 24px;
+}
+
+#password-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 0 auto 24px;
+}
+
+#password {
+    margin: 0 auto;;
+}
+
+#confirm-password {
+    margin: 24px auto;
+}
+
+#visibility {
+    color: white;
+    font-size: 32px;
+    margin-left: 10px;
+    margin-right: -42px;
+}
+
+#visibility:hover{
+    cursor: pointer;
 }
 
 #login-form ::placeholder {
@@ -320,11 +463,6 @@ form {
     border-radius: 5px;
     margin-left: auto;
     margin-right: auto;
-}
-
-#login-form a {
-    text-decoration: none;
-    color: black;
 }
 
 #registration-type {
@@ -355,4 +493,147 @@ form {
     font-size: 32px;
     text-align: center;
     margin-right: 10px;
+}
+
+#profile-view {
+    display: flex;
+    height: 80vh;
+}
+
+#profile-posts {
+    height: 80vh;
+    width: 50%;
+    margin: 5vh 20px;
+    border-radius: 5%;
+    overflow-y: scroll;
+    border-block-end-color: rgb(238, 238, 238);
+    border-block-end-style: inset;
+    border-block-end-width: 2px;
+    border-block-start-color: rgb(238, 238, 238);
+    border-block-start-style: inset;
+    border-block-start-width: 2px;
+    border-bottom-color: rgb(238, 238, 238);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-style: inset;
+    border-bottom-width: 2px;
+    border-collapse: separate;
+    border-end-end-radius: 5px;
+    border-end-start-radius: 5px;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-inline-end-color: rgb(238, 238, 238);
+    border-inline-end-style: inset;
+    border-inline-end-width: 2px;
+    border-inline-start-color: rgb(238, 238, 238);
+    border-inline-start-style: inset;
+    border-inline-start-width: 2px;
+    border-left-color: rgb(238, 238, 238);
+    border-left-style: inset;
+    border-left-width: 2px;
+    border-right-color: rgb(238, 238, 238);
+    border-right-style: inset;
+    border-right-width: 2px;
+    border-start-end-radius: 5px;
+    border-start-start-radius: 5px;
+    border-top-color: rgb(238, 238, 238);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-style: inset;
+    border-top-width: 2px;
+    background-color: lightgray;
+}
+
+#profile-messages {
+    height: 80vh;
+    width: 50%;
+    margin: 5vh 20px;
+    border-radius: 5%;
+    overflow-y: scroll;
+    border-block-end-color: rgb(238, 238, 238);
+    border-block-end-style: inset;
+    border-block-end-width: 2px;
+    border-block-start-color: rgb(238, 238, 238);
+    border-block-start-style: inset;
+    border-block-start-width: 2px;
+    border-bottom-color: rgb(238, 238, 238);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-style: inset;
+    border-bottom-width: 2px;
+    border-collapse: separate;
+    border-end-end-radius: 5px;
+    border-end-start-radius: 5px;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-inline-end-color: rgb(238, 238, 238);
+    border-inline-end-style: inset;
+    border-inline-end-width: 2px;
+    border-inline-start-color: rgb(238, 238, 238);
+    border-inline-start-style: inset;
+    border-inline-start-width: 2px;
+    border-left-color: rgb(238, 238, 238);
+    border-left-style: inset;
+    border-left-width: 2px;
+    border-right-color: rgb(238, 238, 238);
+    border-right-style: inset;
+    border-right-width: 2px;
+    border-start-end-radius: 5px;
+    border-start-start-radius: 5px;
+    border-top-color: rgb(238, 238, 238);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-style: inset;
+    border-top-width: 2px;
+    background-color: lightgray;
+}
+
+
+
+.message {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    padding-left: 40px;
+    border: 2px solid black;
+    background-color: white;
+    font-size: 24px;
+    border-radius: 5px;
+}
+
+.message-header ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.message-header li{
+    color: gray;
+    font-style: italic;
+}
+
+.message-main {
+    padding-bottom: 24px;
+}
+
+#profile-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 90%;
+}
+
+#profile-error > div{
+    height: fit-content;
+    color: firebrick;
+    border: 2px solid firebrick;
+    border-radius: 5px;
+    font-size: 32px;
+    padding: 5px;
 }

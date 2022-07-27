@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import {default as Header} from './Header';
 import { signUp, logIn } from "../api";
 
-const Login = ({authenticated, setAuthenticated, currentUser, setCurrentUser}) => {
+const Login = ({authenticated, setAuthenticated, currentUser, setCurrentUser }) => {
     const [signingUp, setSigningUp] = useState(false);
     const [gotError, setGotError] = useState(null);
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -63,6 +64,10 @@ const Login = ({authenticated, setAuthenticated, currentUser, setCurrentUser}) =
         }
     }
 
+    const handleVisibility = event => {
+        setPasswordVisible(!passwordVisible);
+    }
+
     return(
         <Fragment>
             <Header authenticated={authenticated}/>
@@ -84,7 +89,10 @@ const Login = ({authenticated, setAuthenticated, currentUser, setCurrentUser}) =
                                 <label htmlFor="username">Username</label>
                                 <input type='text' placeholder='Enter username...' id="username"></input>
                                 <label htmlFor="password">Password</label>
-                                <input type='text' placeholder='Enter password...' id="password"></input>
+                                <div id="password-wrapper">
+                                    <input type= {passwordVisible? 'text':'password'} placeholder='Enter password...' id="password"></input>
+                                    <span className="material-symbols-outlined" id="visibility" onClick={ handleVisibility }>{passwordVisible? 'visibility':'visibility_off'}</span>
+                                </div>
                                 <button id="login-submit" onClick={ handleLogIn }>Log In</button>
                                 <span id="registration-type" onClick={(event) => {setSigningUp(true); setGotError(false)}}>Create an account</span>
                             </Fragment>

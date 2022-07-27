@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = ({authenticated, setAuthenticated}) => {
+const Header = ({authenticated}) => {
     return (
         <header>
             <span id='logo'>Stranger's Things</span>
